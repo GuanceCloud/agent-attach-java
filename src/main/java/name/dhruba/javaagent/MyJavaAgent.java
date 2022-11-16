@@ -21,11 +21,11 @@ public class MyJavaAgent {
      * @param inst
      * @throws Exception
      */
-    public static void premain(String args, Instrumentation inst) throws Exception {
-        logger.info("premain method invoked with args: {} and inst: {}", args, inst);
-        instrumentation = inst;
-        instrumentation.addTransformer(new MyClassFileTransformer());
-    }
+//    public static void premain(String args, Instrumentation inst) throws Exception {
+//        logger.info("premain method invoked with args: {} and inst: {}", args, inst);
+//        instrumentation = inst;
+//        instrumentation.addTransformer(new MyClassFileTransformer());
+//    }
 
     /**
      * JVM hook to dynamically load javaagent at runtime.
@@ -37,19 +37,14 @@ public class MyJavaAgent {
      * @param inst
      * @throws Exception
      */
-    public static void agentmain(String args, Instrumentation inst) throws Exception {
-        logger.info("agentmain method invoked with args: {} and inst: {}", args, inst);
-        instrumentation = inst;
-        instrumentation.addTransformer(new MyClassFileTransformer());
-    }
+//    public static void agentmain(String args, Instrumentation inst) throws Exception {
+//        logger.info("agentmain method invoked with args: {} and inst: {}", args, inst);
+//        instrumentation = inst;
+//        instrumentation.addTransformer(new MyClassFileTransformer());
+//    }
 
     /**
      * Programmatic hook to dynamically load javaagent at runtime.
      */
-    public static void initialize() {
-        if (instrumentation == null) {
-            MyJavaAgentLoader.loadAgent();
-        }
-    }
 
 }

@@ -3,22 +3,22 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>javaagent-examples</groupId>
-  <artifactId>javaagent-examples</artifactId>
-  <name>javaagent-examples</name>
+  <groupId>agent-attach-java</groupId>
+  <artifactId>agent-attach-java</artifactId>
+  <name>agent-attach-java</name>
   <version>1.0</version>
-  <description>javaagent-examples</description>
+  <description>agent-attach-java</description>
   <packaging>jar</packaging>
 
   <build>
-    <finalName>javaagent-examples</finalName>
+    <finalName>agent-attach-java</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -38,12 +38,12 @@
                 <manifest>
                   <mainClass>name.dhruba.javaagent.MyMainClass</mainClass>
                 </manifest>
-                <manifestEntries>
+    <!--            <manifestEntries>
                   <Premain-Class>name.dhruba.javaagent.MyJavaAgent</Premain-Class>
                   <Agent-Class>name.dhruba.javaagent.MyJavaAgent</Agent-Class>
                   <Can-Redefine-Classes>true</Can-Redefine-Classes>
                   <Can-Retransform-Classes>true</Can-Retransform-Classes>
-                </manifestEntries>
+                </manifestEntries>-->
               </archive>
             </configuration>
           </execution>
@@ -68,11 +68,11 @@
     </dependency>
 
     <dependency>
-      <groupId>com.sun</groupId>
-      <artifactId>tools</artifactId>
-      <version>1.6.0</version>
-      <scope>system</scope>
-      <systemPath>${java.home}/../lib/tools.jar</systemPath>
+      <groupId>io.earcam.wrapped</groupId>
+      <artifactId>com.sun.tools.attach</artifactId>
+      <version>1.8.0_jdk8u131-b11</version>
+      <scope>compile</scope>
+      <type>jar</type>
     </dependency>
 
     <dependency>
