@@ -17,11 +17,8 @@ public class MyMainClass {
     public static void main(String[] args) {
         Config config = Config.parse(args);
         // todo load agent ddtrace
-
-    //    MyJavaAgent.initialize(config.getAgentJar(),config.getOptions());
         JavaAgentLoader.loadAgent(config.getAgentJar(),config.getOptions());
         logger.info("main method invoked with args: {}", Arrays.asList(args));
-     //   logger.info("userName: {}", new MyUser().getName());
     }
 
 }

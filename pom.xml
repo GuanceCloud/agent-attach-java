@@ -38,12 +38,12 @@
                 <manifest>
                   <mainClass>name.dhruba.javaagent.MyMainClass</mainClass>
                 </manifest>
-    <!--            <manifestEntries>
+              <manifestEntries>
                   <Premain-Class>name.dhruba.javaagent.MyJavaAgent</Premain-Class>
                   <Agent-Class>name.dhruba.javaagent.MyJavaAgent</Agent-Class>
                   <Can-Redefine-Classes>true</Can-Redefine-Classes>
                   <Can-Retransform-Classes>true</Can-Retransform-Classes>
-                </manifestEntries>-->
+                </manifestEntries>
               </archive>
             </configuration>
           </execution>
