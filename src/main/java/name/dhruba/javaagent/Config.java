@@ -8,15 +8,15 @@ public class Config {
     private  String agentJar;
 
     public String getOptions() {
-        return options;
+        return this.options;
     }
 
     public String getDownloadAddress() {
-        return downloadAddress;
+        return  this.downloadAddress;
     }
 
     public String getAgentJar() {
-        return agentJar;
+        return  this.agentJar;
     }
 
     private Config(String options,String downloadAddress,String agentJar){
@@ -35,17 +35,18 @@ public class Config {
                 currentArg =arg;
             }else {
                 switch (currentArg){
-                    case "options":
+                    case "-options":
                         option = arg;
-                    case "download":
+                        break;
+                    case "-download":
                         downloadAddr = arg;
-                    case "agent-jar":
+                        break;
+                    case "-agent-jar":
                          agentJar = arg;
+                        break;
                 }
             }
         }
-
         return new Config(option,downloadAddr,agentJar);
     }
-
 }
