@@ -28,6 +28,7 @@ public class JavaAgentLoader {
                     attach.loadAgent(jarFilePath, options);
                 }
                 attach.detach();
+                logger.info(String.format("attach agent into [%s]",virtualMachineDescriptor.displayName()));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

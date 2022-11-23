@@ -1,5 +1,7 @@
 package name.dhruba.javaagent;
 
+import java.io.PrintStream;
+
 public class Config {
     private String options;
 
@@ -44,9 +46,25 @@ public class Config {
                     case "-agent-jar":
                          agentJar = arg;
                         break;
+                    case "-h":
+                    case "-help":
+                        printOut();
+                        break;
+
                 }
             }
         }
         return new Config(option,downloadAddr,agentJar);
+    }
+    public static void printOut(){
+        PrintStream out =   System.out;
+        out.println("    java -jar agent-attach-java.jar [-options <dd options>]");
+        out.println("                                    [-agent-jar <agent filepath>]");
+        out.println("                                    [-h]");
+        out.println("                                    [-help]");
+        out.println(" [-options]:");
+        out.println(" this is dd-java-agnet.jar env, example:");
+        out.println("    dd.agent.port=9529,dd.agent.host=localhost,dd.service=serviceName");
+        out.println(" [-agent-jar]:");
     }
 }
