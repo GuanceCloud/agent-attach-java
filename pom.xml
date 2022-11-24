@@ -36,11 +36,11 @@
               </descriptorRefs>
               <archive>
                 <manifest>
-                  <mainClass>name.dhruba.javaagent.MyMainClass</mainClass>
+                  <mainClass>com.guance.javaagent.MyMainClass</mainClass>
                 </manifest>
               <manifestEntries>
-                  <Premain-Class>name.dhruba.javaagent.MyJavaAgent</Premain-Class>
-                  <Agent-Class>name.dhruba.javaagent.MyJavaAgent</Agent-Class>
+                  <Premain-Class>com.guance.javaagent.MyJavaAgent</Premain-Class>
+                  <Agent-Class>com.guance.javaagent.MyJavaAgent</Agent-Class>
                   <Can-Redefine-Classes>true</Can-Redefine-Classes>
                   <Can-Retransform-Classes>true</Can-Retransform-Classes>
                 </manifestEntries>

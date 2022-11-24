@@ -1,4 +1,4 @@
-package name.dhruba.javaagent;
+package com.guance.javaagent;
 
 import java.io.PrintStream;
 
@@ -66,5 +66,6 @@ public class Config {
         out.println(" this is dd-java-agnet.jar env, example:");
         out.println("    dd.agent.port=9529,dd.agent.host=localhost,dd.service=serviceName");
         out.println(" [-agent-jar]:");
+        out.println(" default is: /usr/local/ddtrace/dd-java-agent.jar");
     }
 }

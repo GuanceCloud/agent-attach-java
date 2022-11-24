@@ -1,4 +1,4 @@
-package name.dhruba.javaagent;
+package com.guance.javaagent;
 
 import java.util.List;
 import com.sun.tools.attach.VirtualMachineDescriptor;
