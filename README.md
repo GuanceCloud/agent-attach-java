@@ -38,7 +38,7 @@ java -jar agent-attach-java.jar -options 'dd.service=test,dd.tag=v1'\
 - "-options" ddtrace 参数 ："dd.agent.host=localhost,dd.agent.port=9529,dd.service=mytest ... "
 - "-agent-jar" agent 路径 默认为：`/usr/local/ddtrace/dd-java-agent.jar`
 - "-pid" 进程 pid
-- "-displayName" 进程名称 比如 -displayName tmall.jar
+- "-displayName" 进程名称 比如 -displayName tmall.jar 注意 pid 和 displayName 必须有一个非空。
 - "-h or -help" 帮助
 
 ## build
