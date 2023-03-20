@@ -9,6 +9,10 @@ public class Config {
 
     private  String agentJar;
 
+    private String pid;
+
+    private String displayName;
+
     public String getOptions() {
         return this.options;
     }
@@ -21,10 +25,15 @@ public class Config {
         return  this.agentJar;
     }
 
-    private Config(String options,String downloadAddress,String agentJar){
+    public String getPid(){return this.pid;}
+    public String getDisplayName(){return this.displayName;}
+
+    private Config(String options,String downloadAddress,String agentJar,String pid,String displayName){
         this.options = options;
         this.downloadAddress = downloadAddress;
         this.agentJar = agentJar;
+        this.pid = pid;
+        this.displayName = displayName;
     }
 
     static Config parse(String... args){
@@ -32,6 +41,8 @@ public class Config {
         String downloadAddr= "";
         String currentArg = "";
         String agentJar= "";
+        String pid = "";
+        String displayName = "";
         for(String arg : args){
             if (arg.startsWith("-")){
                 currentArg =arg;
@@ -46,6 +57,12 @@ public class Config {
                     case "-agent-jar":
                          agentJar = arg;
                         break;
+                    case "-pid":
+                        pid = arg;
+                        break;
+                    case "-displayName":
+                        displayName = arg;
+                        break;
                     case "-h":
                     case "-help":
                         printOut();
@@ -54,18 +71,25 @@ public class Config {
                 }
             }
         }
-        return new Config(option,downloadAddr,agentJar);
+        return new Config(option,downloadAddr,agentJar,pid,displayName);
     }
     public static void printOut(){
         PrintStream out =   System.out;
         out.println("    java -jar agent-attach-java.jar [-options <dd options>]");
         out.println("                                    [-agent-jar <agent filepath>]");
+        out.println("                                    [-pid <pid>]");
+        out.println("                                    [-displayName <service name/displayName>]");
         out.println("                                    [-h]");
         out.println("                                    [-help]");
         out.println(" [-options]:");
         out.println(" this is dd-java-agnet.jar env, example:");
-        out.println("    dd.agent.port=9529,dd.agent.host=localhost,dd.service=serviceName");
+        out.println("    dd.agent.port=9529,dd.agent.host=localhost,dd.service=serviceName,...");
         out.println(" [-agent-jar]:");
         out.println(" default is: /usr/local/ddtrace/dd-java-agent.jar");
+        out.println(" [-pid]:");
+        out.println(" service PID String");
+        out.println(" [-displayName]:");
+        out.println(" service name");
+        out.println(" Note: -pid or -displayName must have a non empty !!!");
     }
 }

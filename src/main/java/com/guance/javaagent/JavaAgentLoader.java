@@ -12,23 +12,49 @@ public class JavaAgentLoader {
 
     private static final String jarFilePath = "/usr/local/ddtrace/dd-java-agent.jar";
 
-    public static void loadAgent(String agentJar ,String options) {
+    public static void loadAgent(Config config) {
         logger.info("dynamically loading javaagent");
-        logger.info("------------------options-------------"+options);
-        logger.info("------------------agentJar-------------"+agentJar);
+        logger.info("config.options:"+ config.getOptions());
+        logger.info("config.agentJar: "+config.getAgentJar());
+        logger.info("config.pid: "+config.getPid());
+        logger.info("config.displayName: "+config.getDisplayName());
+        boolean idMode = false;
+        boolean nameMode= false;
+        if (config.getPid() != null && !config.getPid().equals("")){
+            idMode = true;
+        }
+        if (config.getDisplayName()!= null && !config.getDisplayName().equals("")){
+            nameMode =true;
+        }
+        if (!idMode && !nameMode){
+            logger.warn("-pid or -displayName must have a non empty");
+            return;
+        }
         try {
             List<VirtualMachineDescriptor> list = VirtualMachine.list();
             for (int i = 0; i < list.size(); i++) {
                 VirtualMachineDescriptor virtualMachineDescriptor = list.get(i);
-                String version = virtualMachineDescriptor.id();
-                VirtualMachine attach = VirtualMachine.attach(version);
-                if (agentJar != null && !agentJar.equals("")){
-                    attach.loadAgent(agentJar, options);
+                String pid = virtualMachineDescriptor.id();
+		        logger.info(pid);
+		    //    logger.info(virtualMachineDescriptor.displayName());
+                VirtualMachine attach = null;
+                if (idMode && config.getPid().equals(pid) ){
+                     attach = VirtualMachine.attach(pid);
+                }
+                if (nameMode && virtualMachineDescriptor.displayName().equals(config.getDisplayName())){
+                    attach = VirtualMachine.attach(pid);
+                }
+                if (attach == null){
+                    continue;
+                }
+                if (config.getAgentJar() != null && !config.getAgentJar().equals("")){
+                    attach.loadAgent(config.getAgentJar(), config.getOptions());
                 }else {
-                    attach.loadAgent(jarFilePath, options);
+                    attach.loadAgent(jarFilePath, config.getOptions());
                 }
                 attach.detach();
                 logger.info(String.format("attach agent into [%s]",virtualMachineDescriptor.displayName()));
+                return;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
