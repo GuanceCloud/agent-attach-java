@@ -42,7 +42,7 @@ java -jar agent-attach-java.jar -options 'dd.service=test,dd.tag=v1'\
 - "-h or -help" 帮助
 
 ## build
-由于从 jdk9开始就没有 tools.jar 文件。所以在项目目录下带上了tools文件： `lib/tools.jar` 是 jdk1.8.1 版本的。
+由于从 jdk9 开始就没有 tools.jar 文件。所以在项目目录下带上了tools文件： `lib/tools.jar` 是 jdk1.8 版本的。
 
 本地编译：
 ```shell
@@ -51,7 +51,7 @@ cd agent-attach-java
 mvn package
 ```
 
-使用其他版本 tools ，请修改 pom.xml
+使用其他版本 tools，请修改 pom.xml 。
 
 
 ## 文档
