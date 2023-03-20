@@ -46,6 +46,10 @@ public class Config {
         for(String arg : args){
             if (arg.startsWith("-")){
                 currentArg =arg;
+                if (arg.equals("-h") || arg.equals("-help")){
+                    printOut();
+                    System.exit(1);
+                }
             }else {
                 switch (currentArg){
                     case "-options":
@@ -63,11 +67,6 @@ public class Config {
                     case "-displayName":
                         displayName = arg;
                         break;
-                    case "-h":
-                    case "-help":
-                        printOut();
-                        break;
-
                 }
             }
         }
@@ -75,21 +74,26 @@ public class Config {
     }
     public static void printOut(){
         PrintStream out =   System.out;
-        out.println("    java -jar agent-attach-java.jar [-options <dd options>]");
-        out.println("                                    [-agent-jar <agent filepath>]");
-        out.println("                                    [-pid <pid>]");
-        out.println("                                    [-displayName <service name/displayName>]");
-        out.println("                                    [-h]");
-        out.println("                                    [-help]");
-        out.println(" [-options]:");
-        out.println(" this is dd-java-agnet.jar env, example:");
-        out.println("    dd.agent.port=9529,dd.agent.host=localhost,dd.service=serviceName,...");
-        out.println(" [-agent-jar]:");
-        out.println(" default is: /usr/local/ddtrace/dd-java-agent.jar");
-        out.println(" [-pid]:");
-        out.println(" service PID String");
-        out.println(" [-displayName]:");
-        out.println(" service name");
-        out.println(" Note: -pid or -displayName must have a non empty !!!");
+        out.println("java -jar agent-attach-java.jar [-options <dd options>]");
+        out.println("                                [-agent-jar <agent filepath>]");
+        out.println("                                [-pid <pid>]");
+        out.println("                                [-displayName <service name/displayName>]");
+        out.println("                                [-h]");
+        out.println("                                [-help]");
+        out.println("[-options]:");
+        out.println("   this is dd-java-agnet.jar env, example:");
+        out.println("       dd.agent.port=9529,dd.agent.host=localhost,dd.service=serviceName,...");
+        out.println("[-agent-jar]:");
+        out.println("   default is: /usr/local/ddtrace/dd-java-agent.jar");
+        out.println("[-pid]:");
+        out.println("   service PID String");
+        out.println("[-displayName]:");
+        out.println("   service name");
+        out.println("Note: -pid or -displayName must have a non empty !!!");
+        out.println("");
+        out.println("example command line:");
+        out.println("java -jar agent-attach-java.jar -options 'dd.service=test,dd.tag=v1'\\");
+        out.println(" -displayName tmall.jar \\");
+        out.println(" -agent-jar /usr/local/ddtrace/dd-java-agent.jar");
     }
 }
