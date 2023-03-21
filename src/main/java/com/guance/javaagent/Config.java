@@ -1,8 +1,28 @@
 package com.guance.javaagent;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Config {
+    public static final String LINUX_DIR = "/usr/local/ddtrace";
+
+    public static final String WIN_DIR = "D:/usr/local/ddtrace";
+
+    public static final String FILE_NAME="dd-java-agent.jar";
+
+    public String getDir(){
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+           return WIN_DIR;
+        } else {
+            return LINUX_DIR;
+        }
+    }
     private String options;
 
     private String downloadAddress;
@@ -57,7 +77,7 @@ public class Config {
                         break;
                     case "-download":
                         downloadAddr = arg;
-                        download(arg);
+                        download(arg,createDir());
                         break;
                     case "-agent-jar":
                          agentJar = arg;
@@ -74,9 +94,59 @@ public class Config {
         return new Config(option,downloadAddr,agentJar,pid,displayName);
     }
 
-    private static void download(String addr) {
-        // download to /usr/local/ddtrace/dd-java-agent.jar
+    private static void download(String arg,String path)  {
+        try{
+            File file = new File(path+"/"+FILE_NAME);
+            //创建新文件
+            if(file!=null && !file.exists()){
+                file.createNewFile();
+            }
+              //输出流
+            OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file));
+            URL url = new URL(arg);
+            //获取链接
+            HttpURLConnection uc = (HttpURLConnection) url.openConnection();
+            uc.setDoInput(true);//设置是否要从 URL 连接读取数据,默认为true
+            uc.connect();
+            //获取输入流，读取文件
+            InputStreamReader in = new InputStreamReader(uc.getInputStream());
+            char[] buffer = new char[4*1024];
+            int length;
+            //读取文件
+            while((length=in.read(buffer))!= -1){
+                //写出
+                out.write(buffer, 0, length);
+            }
+            out.flush();
+            in.close();
+            out.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    // 生成文件夹
+    public static String createDir() {
+        // if win else linux
+        String path = "";
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            path = WIN_DIR;
+        } else {
+            path = LINUX_DIR;
+        }
+        File folder = new File(path);
+        if (!folder.exists() && !folder.isDirectory()) {
+            folder.setWritable(true, false);
+            try{
+                folder.mkdirs();
+            }catch (SecurityException e){
+                e.printStackTrace();
+            }
+            System.out.println("mkdir");
+        } else {
+            System.out.println("文件夹已存在");
+        }
+        return path;
     }
 
     public static void printOut(){

@@ -1,16 +1,17 @@
 package com.guance.javaagent;
 
-import java.util.List;
+import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.tools.attach.VirtualMachine;
+import java.util.List;
+
+import static com.guance.javaagent.Config.FILE_NAME;
 
 public class JavaAgentLoader {
     static final Logger logger = LoggerFactory.getLogger(JavaAgentLoader.class);
 
-    private static final String jarFilePath = "/usr/local/ddtrace/dd-java-agent.jar";
 
     public static void loadAgent(Config config) {
         logger.info("dynamically loading javaagent");
@@ -50,7 +51,7 @@ public class JavaAgentLoader {
                 if (config.getAgentJar() != null && !config.getAgentJar().equals("")){
                     attach.loadAgent(config.getAgentJar(), config.getOptions());
                 }else {
-                    attach.loadAgent(jarFilePath, config.getOptions());
+                    attach.loadAgent(config.getDir()+"/"+ FILE_NAME, config.getOptions());
                 }
                 attach.detach();
                 logger.info(String.format("attach agent into [%s]",virtualMachineDescriptor.displayName()));
