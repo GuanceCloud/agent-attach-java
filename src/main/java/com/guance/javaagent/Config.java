@@ -168,6 +168,8 @@ public class Config {
         out.println("   service name");
         out.println("Note: -pid or -displayName must have a non empty !!!");
         out.println("");
+        out.println("[-download]");
+        out.println("   https://static.guance.com/dd-image/dd-java-agent.jar");
         out.println("example command line:");
         out.println("java -jar agent-attach-java.jar -options 'dd.service=test,dd.tag=v1'\\");
         out.println(" -displayName tmall.jar \\");
