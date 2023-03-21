@@ -57,6 +57,7 @@ public class Config {
                         break;
                     case "-download":
                         downloadAddr = arg;
+                        download(arg);
                         break;
                     case "-agent-jar":
                          agentJar = arg;
@@ -72,6 +73,12 @@ public class Config {
         }
         return new Config(option,downloadAddr,agentJar,pid,displayName);
     }
+
+    private static void download(String addr) {
+        // download to /usr/local/ddtrace/dd-java-agent.jar
+
+    }
+
     public static void printOut(){
         PrintStream out =   System.out;
         out.println("java -jar agent-attach-java.jar [-options <dd options>]");
