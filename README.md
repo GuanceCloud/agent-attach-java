@@ -54,15 +54,69 @@ java -jar agent-attach-java.jar -options 'dd.service=test,dd.tag=v1'\
 
 由于从 jdk9 开始就没有 tools.jar 文件。所以在项目目录下带上了tools文件： `lib/tools.jar` 是 jdk1.8 版本的。
 
-本地编译：
+## 建议本地编译：
+
+
+JDK 版本 1.8 和 1.8 以上不可以交叉使用。
+
+如使用发布版本 请使用相应的 [releases 版本](https://github.com/GuanceCloud/agent-attach-java/releases){:target="_blank"}
+
+***建议下载源码*** 并编译：
 
 ```shell
-git clone https://github.com/GuanceCloud/agent-attach-java.git
-cd agent-attach-java
-mvn package
+git clone https://github.com/GuanceCloud/agent-attach-java
 ```
 
-使用其他版本 tools，请修改 pom.xml 。
+如果是 JDK 1.8 版本，修改配置文件 pom.xml:
+
+```xml
+<!--将版本修改为 1.8 -->
+    <configuration>
+      <source>1.8</source>
+      <target>1.8</target>
+    </configuration>
+    
+    <!--将下面的注释放开，并将 tools.jar 注释掉 !!!-->
+    <dependency>
+      <groupId>io.earcam.wrapped</groupId>
+      <artifactId>com.sun.tools.attach</artifactId>
+      <version>1.8.0_jdk8u131-b11</version>
+      <scope>compile</scope>
+      <type>jar</type>
+    </dependency>
+```
+
+如果版本是 JDK 9、11、17 使用以下配置 pom.xml:
+
+```xml
+<!--将目标版本修改为指定的版本-->
+    <configuration>
+        <source>11</source>
+        <target>11</target>
+    </configuration>
+
+<!--    <dependency>
+      <groupId>io.earcam.wrapped</groupId>
+      <artifactId>com.sun.tools.attach</artifactId>
+      <version>1.8.0_jdk8u131-b11</version>
+      <scope>compile</scope>
+      <type>jar</type>
+    </dependency>-->
+    <dependency>
+      <groupId>com.sun</groupId>
+      <artifactId>tools</artifactId>
+      <version>1.8.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/tools.jar</systemPath>
+    </dependency>
+```
+
+```shell
+mvn package
+# 使用 target/agent-attach-java-jar-with-dependencies.jar
+rm -f target/agent-attach-java.jar
+mv target/agent-attach-java-jar-with-dependencies.jar agent-attach-java.jar
+```
 
 ## 文档
 
